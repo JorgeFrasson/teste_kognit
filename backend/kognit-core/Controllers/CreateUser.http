@@ -1,0 +1,8 @@
+POST http://localhost:7001/user/create
+Content-Type: application/json
+
+{
+    "name": "Jorge henrique Frasson",
+    "birthdate": "1999-05-19T00:00:00Z",
+    "cpf": "141545220703"
+}

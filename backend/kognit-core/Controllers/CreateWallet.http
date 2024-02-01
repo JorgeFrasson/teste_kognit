@@ -1,0 +1,8 @@
+POST http://localhost:7001/wallet/create
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "bank": "Nubank",
+    "balance": 12.58
+}

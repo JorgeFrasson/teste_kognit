@@ -1,0 +1,48 @@
+version: "0.1"
+
+services:
+  kognit-db:
+    build:
+      context: ./banco
+    ports:
+      - "5434:1433"
+    networks:
+      - application_net
+    environment:
+      - SA_PASSWORD=kognit@1
+      - ACCEPT_EULA=Y
+    volumes:
+      - banco-volume:/var/lib/sqlserver/data
+
+  kognit-core:
+    build:
+      context: ./backend/kognit-core
+      dockerfile: Dockerfile
+    ports:
+      - "7001:80"
+    networks:
+      - application_net
+    depends_on:
+      - kognit-db
+    env_file: ./backend/kognit-core/.env/dev.env 
+  
+  kognit-front:
+    build:
+      context: ./frontend/kognit-front/
+      dockerfile: Dockerfile
+    env_file: ./frontend/kognit-front/.env/dev.env
+    ports:
+      - "8888:3000"
+    volumes:
+      - ./frontend/kognit-front/:/home/node
+      - kognit-front-volume:/home/node/node_modules
+    networks:
+      - application_net
+
+volumes:
+  banco-volume:
+  kognit-front-volume:
+
+networks:
+  application_net:
+    driver: bridge
