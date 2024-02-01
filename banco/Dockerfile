@@ -1,12 +1,12 @@
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
+USER root
+
 RUN mkdir -p /usr/work
 
 WORKDIR /usr/work
 
 COPY . /usr/work/
-
-USER root
 
 RUN chmod +x /usr/work/import-data.sh
 
